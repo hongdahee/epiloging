@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get("/:storageId", storageController.getStorage);
 
+router.get("/:storageId/:contentsId", storageController.getContents);
+
 router.post(
   "/:storageId",
   //   [

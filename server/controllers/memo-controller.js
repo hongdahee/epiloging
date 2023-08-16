@@ -20,7 +20,7 @@ const getMemos = async (req, res, next) => {
     );
     return next(error);
   }
-  res.status(200).json(memos);
+  res.status(200).json(memos[0].contents[0].memo);
 };
 
 const postMemo = async (req, res, next) => {

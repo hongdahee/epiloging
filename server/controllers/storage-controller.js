@@ -4,9 +4,10 @@ const HttpError = require("../models/http-error");
 const { Storage } = require("../models/storage");
 
 const getStorage = async (req, res, next) => {
+  const storageId = req.params.storageId;
   let storage;
   try {
-    storage = await Storage.find({ storageId: req.params.storageId });
+    storage = await Storage.find({ storageId });
   } catch (err) {
     const error = new HttpError(
       "보관함을 가져오는 데 실패했습니다. 다시 시도해 주세요.",
@@ -15,6 +16,26 @@ const getStorage = async (req, res, next) => {
     return next(error);
   }
   res.json({ storage });
+};
+
+const getContents = async (req, res, next) => {
+  const storageId = req.params.storageId;
+  const contentsId = req.params.contentsId;
+
+  let contents;
+  try {
+    contents = await Storage.find(
+      { storageId },
+      { contents: { $elemMatch: { contentsId } } }
+    );
+  } catch (err) {
+    const error = new HttpError(
+      "컨텐츠를 가져오는 데 실패했습니다. 다시 시도해 주세요.",
+      500
+    );
+    return next(error);
+  }
+  res.json({ contents });
 };
 
 const storeContents = async (req, res, next) => {
@@ -220,6 +241,7 @@ const deleteContents = async (req, res, next) => {
 };
 
 exports.getStorage = getStorage;
+exports.getContents = getContents;
 exports.storeContents = storeContents;
 exports.updateContents = updateContents;
 exports.deleteContents = deleteContents;
