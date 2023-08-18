@@ -49,6 +49,10 @@ const storeContents = async (req, res, next) => {
     id,
     contentsId,
     mainContents,
+    date,
+    publisher,
+    actors,
+    creator,
   } = req.body;
   const storageId = req.params.storageId;
 
@@ -62,6 +66,10 @@ const storeContents = async (req, res, next) => {
     id,
     contentsId,
     mainContents,
+    date,
+    publisher,
+    actors,
+    creator,
   };
 
   try {
@@ -94,6 +102,9 @@ const storeContents = async (req, res, next) => {
               img,
               id,
               isbn,
+              publisher,
+              actors,
+              creator,
             },
           },
         }

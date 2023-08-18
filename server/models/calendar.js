@@ -7,6 +7,9 @@ const eventSchema = new Schema({
   img: { type: String, required: true },
   id: { type: Number },
   isbn: { type: Number },
+  publisher: { type: String },
+  actors: { type: [String] },
+  creator: { type: String, required: true },
 });
 
 const calendarSchema = new Schema({
