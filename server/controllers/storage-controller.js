@@ -49,10 +49,13 @@ const storeContents = async (req, res, next) => {
     id,
     contentsId,
     mainContents,
-    date,
+    releaseDate,
     publisher,
     actors,
     creator,
+    totalNum,
+    currentNum,
+    country,
   } = req.body;
   const storageId = req.params.storageId;
 
@@ -66,10 +69,13 @@ const storeContents = async (req, res, next) => {
     id,
     contentsId,
     mainContents,
-    date,
+    releaseDate,
     publisher,
     actors,
     creator,
+    totalNum,
+    currentNum,
+    country,
   };
 
   try {
@@ -132,6 +138,7 @@ const updateContents = async (req, res, next) => {
     completedContents,
     id,
     isbn,
+    currentNum,
   } = req.body;
 
   try {
@@ -146,6 +153,7 @@ const updateContents = async (req, res, next) => {
           "contents.$[el].img": img,
           "contents.$[el].mainContents": mainContents,
           "contents.$[el].completedContents": completedContents,
+          "contents.$[el].currentNum": currentNum,
         },
       },
       { arrayFilters: [{ "el.contentsId": contentsId }] }

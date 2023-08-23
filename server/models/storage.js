@@ -25,10 +25,13 @@ const contentSchema = new Schema({
   contentsId: { type: Number, required: true },
   mainContents: { type: Boolean, required: true },
   memo: { type: [memoSchema], default: [] },
-  date: { type: String, required: true },
+  releaseDate: { type: String, required: true },
   creator: { type: String, required: true },
   publisher: { type: String },
   actors: { type: [String] },
+  totalNum: { type: Number },
+  currentNum: { type: Number },
+  country: { type: String },
 });
 
 const storageSchema = new Schema({
