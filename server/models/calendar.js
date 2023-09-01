@@ -10,6 +10,7 @@ const eventSchema = new Schema({
   publisher: { type: String },
   actors: { type: [String] },
   creator: { type: String, required: true },
+  star: { type: Number, required: true },
 });
 
 const calendarSchema = new Schema({

@@ -32,6 +32,7 @@ const contentSchema = new Schema({
   totalNum: { type: Number },
   currentNum: { type: Number },
   country: { type: String },
+  star: { type: Number, required: true },
 });
 
 const storageSchema = new Schema({

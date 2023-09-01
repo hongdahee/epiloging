@@ -56,6 +56,7 @@ const storeContents = async (req, res, next) => {
     totalNum,
     currentNum,
     country,
+    star,
   } = req.body;
   const storageId = req.params.storageId;
 
@@ -76,6 +77,7 @@ const storeContents = async (req, res, next) => {
     totalNum,
     currentNum,
     country,
+    star,
   };
 
   try {
@@ -111,6 +113,7 @@ const storeContents = async (req, res, next) => {
               publisher,
               actors,
               creator,
+              star,
             },
           },
         }
