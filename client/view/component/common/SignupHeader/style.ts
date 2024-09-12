@@ -1,5 +1,5 @@
 import {styled} from 'styled-components/native';
-import {font} from '../../../util/fontSize';
+import {font} from '../../../../util/fontSize';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {Platform} from 'react-native';
 
@@ -13,7 +13,7 @@ export const Header = styled.View`
   flex-direction: row;
   padding-left: 5%;
   padding-right: 5%;
-  padding-top: ${StatusBarHeight}px;
+  /* padding-top: ${StatusBarHeight}px; */
 `;
 
 export const HeaderTitle = styled.Text`
@@ -22,10 +22,16 @@ export const HeaderTitle = styled.Text`
   font-weight: 700;
 `;
 
+export const HeaderNextBtnText = styled.Text`
+  font-size: ${font(14)}px;
+  color: black;
+  font-weight: 500;
+`;
+
 export const HeaderButton = styled.TouchableOpacity``;
 
 export const HeaderButtonImg = styled.Image`
-  width: 24px;
-  height: 25px;
+  width: 16px;
+  height: 16px;
   object-fit: contain;
 `;

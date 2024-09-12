@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {Header} from '../common/Header';
+import {Header} from '../component/common/Header';
 import * as S from './style';
 import {FlatList} from 'react-native';
 import {getStorageContents} from '../../model/storageModel';
@@ -10,37 +10,53 @@ const TabItem = ({
   title,
   id,
   isbn,
+  item,
 }: {
   img: string;
   title: string;
   id?: string;
   isbn?: string;
+  item: any;
 }) => {
   const navigation = useNavigation<any>();
 
   return (
     <S.Contents
-      onPress={() => navigation.navigate('Note', {id, isbn})}
+      onPress={() => navigation.navigate('Note', {item})}
       style={{shadowColor: 'rgba(142, 142, 142, 0.3)'}}>
       <S.ContentsImg source={{uri: img}} />
       <S.ContentsInfo>
         <S.InfoTitle>{title}</S.InfoTitle>
+        <S.MainInfo>
+          {item.creator} | {item.isbn ? item.publisher : item.country}
+        </S.MainInfo>
       </S.ContentsInfo>
     </S.Contents>
   );
 };
 export const Storage = () => {
   const [selectedTab, setSelectedTab] = useState('책');
-  const [storageData, setStorageData] = useState<any>([]);
+  const [bookData, setBookData] = useState<any>([]);
+  const [movieData, setMovieData] = useState<any>([]);
 
   const selectTab = (tab: string) => {
     setSelectedTab(tab);
   };
 
   useEffect(() => {
-    getStorageContents('ebMjDFr0AZKxEeEQdlTvk').then(data =>
-      setStorageData(data.storage[0].contents),
-    );
+    getStorageContents('ebMjDFr0AZKxEeEQdlTvk')
+      .then(data => {
+        console.log(data);
+        setBookData(
+          data?.storage[0]?.contents?.filter((data: any) => data.isbn),
+        );
+        setMovieData(
+          data?.storage[0]?.contents?.filter((data: any) => data.id),
+        );
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }, []);
 
   return (
@@ -64,7 +80,7 @@ export const Storage = () => {
         </S.Tab>
         <S.StorageInfo>
           <S.StorageCount>
-            {storageData.length}
+            {selectedTab === '책' ? bookData?.length : movieData?.length}
             {selectedTab === '책' ? '권' : '편'}
           </S.StorageCount>
         </S.StorageInfo>
@@ -73,13 +89,10 @@ export const Storage = () => {
             showsVerticalScrollIndicator={false}
             style={{marginTop: '2.5%'}}
             numColumns={3}
-            data={
-              selectedTab === '책'
-                ? storageData.filter((data: any) => data.isbn)
-                : storageData.filter((data: any) => data.id)
-            }
+            data={selectedTab === '책' ? bookData : movieData}
             renderItem={({item}) => (
               <TabItem
+                key={item.id || item.isbn}
                 id={item.id}
                 isbn={item.isbn}
                 title={item.title}
@@ -88,6 +101,7 @@ export const Storage = () => {
                     ? item.img
                     : `https://image.tmdb.org/t/p/w500${item.img}`
                 }
+                item={item}
               />
             )}
             keyExtractor={(item, index) => String(index)}

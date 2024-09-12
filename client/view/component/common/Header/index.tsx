@@ -18,7 +18,7 @@ export const Header = ({
         <S.HeaderButton onPress={() => navigation.pop()}>
           <S.HeaderButtonImg
             style={{width: 7, height: 13}}
-            source={require(`../../../assets/headerBack.png`)}
+            source={require(`../../../../assets/headerBack.png`)}
           />
         </S.HeaderButton>
       ) : (

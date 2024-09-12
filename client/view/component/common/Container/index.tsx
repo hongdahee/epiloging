@@ -1,4 +1,4 @@
-import {IContainerProps} from '../../../types/container';
+import {IContainerProps} from '../../../../types/container';
 import * as S from './style';
 
 export const Container = ({children}: IContainerProps) => {

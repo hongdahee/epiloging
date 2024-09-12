@@ -1,7 +1,7 @@
 import {Image, Text, TouchableOpacity, View, Dimensions} from 'react-native';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import * as S from './style';
-import {Header} from '../common/Header';
+import {Header} from '../component/common/Header';
 import {useEffect, useState} from 'react';
 import {getCalendarEvents} from '../../model/calendarModel';
 import {IEvents} from '../../types/calendar';
@@ -47,13 +47,17 @@ export const CalendarScreen = () => {
   const [events, setEvents] = useState<IEvents[]>([]);
 
   useEffect(() => {
-    getCalendarEvents('ebMjDFr0AZKxEeEQdlTvk').then(data => setEvents(data));
+    getCalendarEvents('ebMjDFr0AZKxEeEQdlTvk')
+      .then(data => {
+        setEvents(data[0].events);
+      })
+      .catch(error => console.log(error));
   }, []);
 
   let event;
 
   const checkEvent = (date: string) => {
-    event = events.filter(e => e.date === date);
+    event = events?.filter(e => e.date === date);
     return event;
   };
 
@@ -112,7 +116,6 @@ export const CalendarScreen = () => {
               <TouchableOpacity
                 style={{
                   alignItems: 'center',
-                  // backgroundColor: 'blue',
                   width: Math.floor(width / 8.8),
                   maxHeight: Math.floor(height / 11),
                   marginBottom: '3%',
@@ -146,12 +149,12 @@ export const CalendarScreen = () => {
                     {date?.day}
                   </Text>
                 )}
-                {checkEvent(date!.dateString).length > 0 ? (
+                {checkEvent(date!.dateString)?.length > 0 ? (
                   <View
                     key={date?.dateString}
                     style={{
                       width: '75%',
-                      maxHeight: '100%',
+                      maxHeight: 67,
                       justifyContent: 'center',
                       alignItems: 'center',
                       paddingTop: '5%',
@@ -163,7 +166,7 @@ export const CalendarScreen = () => {
                             width: 1,
                             height: 1,
                           },
-                          shadowOpacity: 2,
+                          shadowOpacity: 1,
                         },
                         android: {
                           elevation: 2,

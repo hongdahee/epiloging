@@ -1,4 +1,3 @@
-import axios from 'axios';
 import {BASE_URL} from '@env';
 
 // export const createAccount = async (formData: ISignUpForm) => {
@@ -28,6 +27,11 @@ import {BASE_URL} from '@env';
 // };
 
 export const getCalendarEvents = async (storageId: string) => {
-  const response = await axios.get(`${BASE_URL}/api/calendar/${storageId}`);
-  return response.data[0].events;
+  try {
+    const response = await fetch(`${BASE_URL}/api/calendar/${storageId}`);
+    const json = response.json();
+    return json;
+  } catch (error) {
+    console.log(error);
+  }
 };
